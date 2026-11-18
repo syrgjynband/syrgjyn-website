@@ -1,0 +1,48 @@
+
+media:
+  input: images
+  output: /images
+
+content:
+  - name: chronicles
+    label: The Chronicles
+    type: collection
+    path: content/posts
+    fields:
+      - name: title
+        label: Article Title
+        type: string
+        required: true
+
+      - name: date
+        label: Publication Date
+        type: date
+
+      - name: category
+        label: Category
+        type: select
+        options:
+          values:
+            - Band News
+            - Underground History
+            - Music & Releases
+            - The Syrgjyn Codex
+
+      - name: description
+        label: Short Description
+        type: text
+
+      - name: cover
+        label: Cover Image
+        type: image
+
+      - name: body
+        label: Article Content
+        type: rich-text
+
+    view:
+      fields: [title, date, category]
+      primary: title
+      default:
+        sort: date
+        order: desc
