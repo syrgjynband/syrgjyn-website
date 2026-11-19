@@ -1,0 +1,13 @@
+{
+  "name": "syrgjyn-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Syrgjyn official website with Pages CMS and Eleventy",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}
