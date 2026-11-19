@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Syrgjyn | Albanian Underground Metal Band Since 1999</title>
+<meta name="description" content="Syrgjyn is an Albanian underground metal band founded in Tirana in 1999. Explore our albums, music, live performances and the history of Albanian metal." />
+<meta content="Syrgjyn — METAL. PURITY. FAITH. Official band website." name="description"/>
+<style>
+    :root { --bg:#000; --bg2:#0d0d0d; --fg:#fff; --muted:#9b9b9b; }
+    * { box-sizing: border-box; }
+    html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    a { color: var(--fg); text-decoration: none; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 18px; }
+    header { position: sticky; top:0; z-index:10; background:rgba(0,0,0,.6); backdrop-filter: blur(6px); border-bottom:1px solid #141414; }
+    nav { display:flex; align-items:center; justify-content:space-between; height:64px; }
+    .logo { letter-spacing:4px; font-weight:800; font-size:20px; }
+    .navlinks a { margin-left:18px; font-size:14px; opacity:.85 }
+    .navlinks a:hover { opacity:1; text-decoration:underline; }
+    .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #1a1a1a;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.gallery img:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+
+    .hero { 
+  min-height: 72vh; 
+  display:grid; 
+  place-items:center; 
+  text-align:center; 
+  padding:60px 18px;
+  background: 
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), /* dark overlay */
+    url('images/hero-bg.jpg') center/cover no-repeat; /* your image */
+  border-bottom:1px solid #111;
+}
+
+    .hero h1 { font-size: clamp(36px, 6vw, 80px); letter-spacing: 6px; margin: 0 0 10px; text-transform:uppercase; }
+    .tag { color: var(--muted); font-size: clamp(14px, 2vw, 18px); letter-spacing: 1px; }
+    .cta { margin-top:28px; display:inline-block; border:2px solid var(--fg); padding:12px 22px; text-transform:uppercase; font-weight:700; letter-spacing:1px; transition:.25s; }
+    .cta:hover { background:var(--fg); color:var(--bg); }
+
+    section { padding:64px 0; border-bottom: 1px solid #111; }
+    h2 { text-transform: uppercase; letter-spacing:3px; font-size: 22px; margin:0 0 18px }
+    p.lead { color: var(--muted); margin: 0 0 24px; }
+
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:28px; }
+    @media (max-width: 880px){ .grid { grid-template-columns:1fr; } }
+
+    .card { background: var(--bg2); border:1px solid #141414; border-radius:16px; padding:18px; }
+    .list { display:grid; gap:12px; }
+    .show { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border:1px solid #141414; border-radius:12px; }
+    .show small { color: var(--muted); }
+
+    footer { padding:36px 0; text-align:center; color:var(--muted); font-size:14px; }
+
+    /* Chronicles additions */
+    .navlinks { display:flex; flex-wrap:wrap; gap:9px 17px; align-items:center; }
+    .navlinks a { margin-left:0; }
+    .logo { font-size:clamp(12px,1.5vw,20px); letter-spacing:clamp(1px,.3vw,4px); }
+    @media (max-width:760px) {
+      nav { min-height:64px; height:auto; padding:14px 0; flex-direction:column; gap:12px; }
+      .navlinks { justify-content:center; gap:12px 16px; }
+      .navlinks a { font-size:13px; }
+    }
+    .chronicles-intro { max-width:650px; }
+    .post-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:28px; }
+    .post-card { display:flex; flex-direction:column; background:#0d0d0d; border:1px solid #252525; border-radius:12px; overflow:hidden; }
+    .post-art { min-height:180px; display:grid; place-items:center; text-align:center; padding:24px; background:linear-gradient(135deg,#191919,#050505); border-bottom:1px solid #252525; font-weight:900; font-size:clamp(24px,4vw,35px); letter-spacing:4px; }
+    .post-content { padding:24px; flex:1; display:flex; flex-direction:column; }
+    .post-meta { color:#aaa; font-size:12px; text-transform:uppercase; letter-spacing:1.5px; }
+    .post-content h3 { font-size:23px; line-height:1.2; margin:14px 0; text-transform:uppercase; }
+    .post-content p { color:#aaa; line-height:1.7; flex:1; }
+    .post-link { display:inline-block; padding-top:13px; border-bottom:1px solid #fff; width:max-content; font-weight:700; text-transform:uppercase; font-size:12px; letter-spacing:1px; }
+    .article-shell { max-width:760px; margin:0 auto; padding:75px 18px 100px; }
+    .article-shell h1 { font-size:clamp(36px,6vw,68px); text-transform:uppercase; line-height:1.06; letter-spacing:2px; }
+    .article-shell p { color:#ccc; line-height:1.85; font-size:18px; }
+    .article-shell .back { display:inline-block; margin-bottom:32px; color:#bbb; text-decoration:underline; }
+    .article-shell .intro { font-size:22px; color:#fff; }
+  @media (max-width: 720px) {nav {height:auto;min-height:64px;flex-wrap:wrap;gap:10px;padding:12px 0} .navlinks {display:flex;flex-wrap:wrap;gap:8px 14px} .navlinks a {margin-left:0} .logo {font-size:15px;letter-spacing:2px}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<nav>
+<div class="logo">WELCOME TO SYRGJYN AREA</div>
+<div class="navlinks">
+<a href="#music">Music</a>
+<a href="#video">Video</a>
+<a href="#shows">Shows</a>
+<a href="blog.html">Blog</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</div>
+</nav>
+</div>
+</header>
+<main>
+<section class="hero">
+<div class="wrap">
+<h1>BORN METAL<br/>LIVE METAL<br/>DEATH METAL</h1>
+<div class="tag">The band that never was.</div>
+<a class="cta" href="mailto:info@syrgjyn.com">Click here for merch or booking</a>
+</div>
+</section>
+<!-- MUSIC -->
+<section id="music">
+<div class="wrap grid">
+<div>
+<h2>Music</h2>
+<p class="lead">Stream Syrgjyn on Spotify. Crank it. Break something (responsibly).</p>
+<!-- Your Spotify embed (kept exactly as provided) -->
+<div style="border:1px solid #1a1a1a;border-radius:12px;overflow:hidden;">
+<iframe allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="" data-testid="embed-iframe" frameborder="0" height="352" loading="lazy" src="https://open.spotify.com/embed/artist/6Q56AfBOeaNPbrToA4vGDi?utm_source=generator" style="border-radius:12px" width="100%"></iframe>
+</div>
+</div>
+<div class="card">
+<h2 style="margin-bottom:8px;">Mailing List</h2>
+<p class="lead">First to get new tracks, gigs, and drops.</p>
+<a class="cta" href="mailto:info@syrgjyn.com?subject=Add%20me%20to%20Syrgjyn%20mailing%20list">Join via Email</a>
+</div>
+</div>
+</section>
+<!-- MERCH -->
+<section id="video">
+<div class="wrap">
+<h2>MERCH</h2>
+<p class="lead">Get the album on Bandcamp. We'd love your support.</p>
+<!-- Channel link (embedding a channel page isn't supported by YouTube without a specific video/playlist ID) -->
+<div class="card">
+<a class="cta" href="https://syrgjyn.bandcamp.com/album/manifest-of-essence-20th-anniversary-remaster" rel="noopener" target="_blank">Visit sale page</a>
+</div>
+</div>
+</section>
+<!-- SHOWS -->
+<section id="shows">
+<div class="wrap">
+<h2>Shows</h2>
+<p class="lead">Catch us live.</p>
+<div class="list">
+<div class="show"><div><strong>Oct 12, 2025</strong> — Tirana — Tulla Culture Center</div><small>Doors 20:00</small></div>
+<div class="show"><div><strong>Nov 08, 2025</strong> — Durrës — Volta</div><small>Doors 21:00</small></div>
+<div class="show"><div><strong>Dec 19, 2025</strong> — Shkodër — Kino</div><small>Doors 20:30</small></div>
+</div>
+</div>
+</section>
+<!-- BLOG / THE CHRONICLES -->
+ <title>Albanian Metal History &amp; Underground Stories | Syrgjyn Blog</title>
+<meta name="description" content="Stories from Albania's underground metal scene. Explore Syrgjyn's history, rock and metal culture, legendary gigs and life behind the music." />
+<section id="blog">
+<div class="wrap">
+<h2>The Chronicles</h2>
+<p class="lead chronicles-intro">Words from the underground. Band updates, music, history, and the code we live by.</p>
+<div class="post-grid">
+<article class="post-card">
+<div aria-hidden="true" class="post-art">WE KEPT THE<br/>FIRE BURNING</div>
+<div class="post-content">
+<div class="post-meta">History · Alkimia · 2005–2011</div>
+<h3>We Kept the Fire Burning</h3>
+<p>Six years. Two musicians. One drum machine. Hundreds of gigs. And a fire that refused to die.</p>
+<a class="post-link" href="posts/we-kept-the-fire-burning.html">Read article →</a>
+</div>
+</article>
+</div>
+<a class="cta" href="blog.html">Explore the blog</a>
+</div>
+</section>
+<!-- ABOUT -->
+<section id="about">
+<div class="wrap grid">
+<div>
+<h2>About</h2>
+<p class="lead">
+            Syrgjyn is considered by many as the most significant underground Albanian metal act.
+            We proudly and steadily paved the way for a new scene that emerged in the years after.
+            This is meant to be. Once again.
+            We don’t do background music. We do full body experiences.
+          </p>
+</div>
+<div class="card">
+<h2 style="margin-bottom:8px;">Members</h2>
+<div class="list">
+<div>Gjergj Mero - Guitars, Vocals</div>
+<div>Olsi Gjondedaj — Guitars</div>
+<div>TBA — Bass</div>
+<div>Bes M. — Drums</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CONTACT -->
+<section id="contact">
+<div class="wrap grid">
+<div>
+<h2>Booking</h2>
+<p class="lead">Festivals, clubs, chaos with a soundcheck. Hit us.</p>
+<a class="cta" href="mailto:info@syrgjyn.com?subject=Booking%20Inquiry">info@syrgjyn.com</a>
+</div>
+<div class="card">
+<h2 style="margin-bottom:8px;">Tech Rider (Quick)</h2>
+<div class="list">
+<div>• 2x guitars, 1x bass, 4-piece drum kit</div>
+<div>• 3 vocal mics (SM58 or similar)</div>
+<div>• 3 guitar/bass DIs as fallback</div>
+<div>• 4 monitor mixes minimum</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- GALLERY -->
+<section id="gallery">
+<div class="wrap">
+<h2>Gallery</h2>
+<p class="lead">Live chaos, backstage noise, and everything in between.</p>
+<p class="lead">More live and backstage photos coming soon.</p>
+</div>
+</section>
+<footer>
+<div class="wrap">
+<p>© 2026 SYRGJYN — All rights reserved.</p>
+<div style="margin-top:16px; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+<a href="https://syrgjyn.bandcamp.com/" rel="noopener" target="_blank">Bandcamp</a>
+<a href="https://facebook.com/syrgjyn" rel="noopener" target="_blank">Facebook</a>
+<a href="https://instagram.com/syrgjyn" rel="noopener" target="_blank">Instagram</a>
+<a href="https://youtube.com/@syrgjyn" rel="noopener" target="_blank">YouTube</a>
+<a href="https://open.spotify.com/artist/6Q56AfBOeaNPbrToA4vGDi" rel="noopener" target="_blank">Spotify</a>
+</div>
+</div>
+</footer>
+</body></html>
