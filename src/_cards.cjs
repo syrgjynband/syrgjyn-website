@@ -16,7 +16,7 @@ function safeImage(value) {
   if (!value || typeof value !== "string") return "";
   // CMS stores images under images/. Reject remote URLs and HTML injections.
   const clean = value.replace(/^\//, "");
-  if (!/^images\/[a-z0-9_./-]+$/i.test(clean) || clean.includes("..")) return "";
+  if (!/^images\/[a-z0-9_./ -]+$/i.test(clean) || clean.includes("..")) return "";
   return "/" + clean;
 }
 function card(post) {
