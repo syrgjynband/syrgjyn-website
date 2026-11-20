@@ -1,9 +1,12 @@
 ---
-title: "We Kept the Metal Fire Burning"
-category: "Underground History"
-description: "Syrgjyn recalls six years of underground metal at Alkimia in Tirana, Albania: two musicians, one drum machine, and hundreds of Saturday-night gigs."
+title: We Kept the Metal Fire Burning
+date: 2026-11-20
+category: Underground History
+description: "Syrgjyn recalls six years of underground metal at Alkimia in
+  Tirana, Albania: two musicians, one drum machine, and hundreds of
+  Saturday-night gigs."
+cover: /images/WhatsApp Image 2026-11-19 at 23.50.38.jpeg
 ---
-
 *Six years. Two musicians. One drum machine. Hundreds of gigs. And a fire that refused to die.*
 
 There are probably easier ways to spend six years of your life than playing extreme metal with a drum machine in a small underground club in Tirana, Albania.
