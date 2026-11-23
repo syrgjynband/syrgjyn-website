@@ -13,6 +13,7 @@ module.exports = class Sitemap {
     const urls = [
       base + "/",
       base + "/blog.html",
+      ...["about", "discography", "shows", "members", "press"].map(p => base + "/" + p + "/"),
       ...collections.chronicles
         .filter(post => post.url)
         .map(post => base + post.url)

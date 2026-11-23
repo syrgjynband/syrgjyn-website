@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://syrgjyn.com/sitemap.xml
