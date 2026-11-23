@@ -2,11 +2,15 @@
 title: We Kept the Metal Fire Burning
 date: 2026-11-20
 category: Underground History
+author: Syrgjyn
+coverAlt: Two Syrgjyn musicians performing at Alkimia in Tirana
 description: "Syrgjyn recalls six years of underground metal at Alkimia in
   Tirana, Albania: two musicians, one drum machine, and hundreds of
   Saturday-night gigs."
-cover: /images/WhatsApp Image 2026-11-19 at 23.50.38.jpeg
+cover: /images/syrgjyn-live-alkimia-tirana.jpg
 ---
+**In brief:** From September 2005 to August 2011, Syrgjyn played every Saturday at Alkimia in Tirana, Albania. Two musicians and a drum machine performed three- to four-hour sets spanning rock, thrash, death metal and black metal, becoming part of the city’s underground music history.
+
 *Six years. Two musicians. One drum machine. Hundreds of gigs. And a fire that refused to die.*
 
 There are probably easier ways to spend six years of your life than playing extreme metal with a drum machine in a small underground club in Tirana, Albania.
@@ -353,3 +357,7 @@ That's something we'll carry with us for the rest of our lives.
 **SYRGJYN**
 
 *Since 1999. Still burning.*
+
+## Listen to Syrgjyn
+
+Explore [Syrgjyn’s discography](/discography/), listen on [Spotify](https://open.spotify.com/artist/6Q56AfBOeaNPbrToA4vGDi), or hear [Manifest of Essence on Bandcamp](https://syrgjyn.bandcamp.com/album/manifest-of-essence-20th-anniversary-remaster). For more stories, visit [The Chronicles](/blog.html).
