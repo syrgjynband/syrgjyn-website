@@ -1,5 +1,5 @@
 const fs = require("node:fs");
-const { escapeHtml, displayDate, safeImage } = require("../src/_cards.cjs");
+const { escapeHtml, displayDate, safeImage } = require("./src/_cards.cjs");
 module.exports = class {
   render(data) {
     const home = fs.readFileSync("index.html", "utf8");
