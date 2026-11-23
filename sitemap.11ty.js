@@ -10,18 +10,22 @@ module.exports = class Sitemap {
   render({ collections }) {
     const base = "https://syrgjyn.com";
 
-    const urls = collections.all
-      .filter(page => page.url && page.url !== "/sitemap.xml")
-      .filter(page => page.outputPath && page.outputPath.endsWith(".html"))
-      .map(page => base + page.url);
-
-    const uniqueUrls = [...new Set(urls)].sort();
+    const urls = [
+      base + "/",
+      base + "/blog.html",
+      ...collections.chronicles
+        .filter(post => post.url)
+        .map(post => base + post.url)
+    ];
 
     const escapeXml = value => value
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+
+    const uniqueUrls = [...new Set(urls)].sort();
 
     return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
