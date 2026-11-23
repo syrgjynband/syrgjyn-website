@@ -4,6 +4,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.setTemplateFormats(["md", "11ty.js"]);
   eleventyConfig.addPassthroughCopy({ images: "images" });
   eleventyConfig.addPassthroughCopy("Syrgjyn_Official_EPK.pdf");
+  eleventyConfig.addPassthroughCopy("robots.txt");
   eleventyConfig.addPassthroughCopy({ posts: "posts" });
 
   eleventyConfig.addCollection("chronicles", function (collectionApi) {
