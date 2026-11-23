@@ -34,7 +34,7 @@ module.exports = class {
       "sameAs": [
         "https://open.spotify.com/artist/6Q56AfBOeaNPbrToA4vGDi",
         "https://www.instagram.com/syrgjyn/",
-        "https://www.youtube.com/syrgjyn",
+        "https://youtube.com/@syrgjyn",
         "https://www.facebook.com/syrgjyn",
         "https://syrgjyn.bandcamp.com",
         "https://www.metal-archives.com/bands/Syrgjyn/3540457051"

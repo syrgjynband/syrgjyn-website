@@ -28,7 +28,7 @@ function card(post) {
   const url = escapeHtml(post.url || "#");
   const cover = safeImage(data.cover);
   const art = cover
-    ? `<div class="post-art" style="padding:0"><img src="${escapeHtml(cover)}" alt="" loading="lazy" style="width:100%;height:190px;object-fit:cover"></div>`
+    ? `<div class="post-art" style="padding:0"><img src="${escapeHtml(cover)}" alt="${escapeHtml(data.coverAlt || `Photo accompanying ${data.title || "Syrgjyn article"}`)}" loading="lazy" style="width:100%;height:190px;object-fit:cover"></div>`
     : `<div aria-hidden="true" class="post-art">${title}</div>`;
   return `<article class="post-card">${art}<div class="post-content"><div class="post-meta">${category}${published ? " · " + escapeHtml(published) : ""}</div><h3>${title}</h3><p>${description}</p><a class="post-link" href="${url}">Read article →</a></div></article>`;
 }
