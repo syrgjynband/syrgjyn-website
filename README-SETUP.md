@@ -33,6 +33,8 @@ If Cloudflare Git integration is enabled, CMS commits should trigger a rebuild. 
 
 `/members`, `/members/` and `/members/index.html` redirect permanently to `/about/#lineup` through Cloudflare's `_redirects` file. A small HTML fallback also preserves the link on static previews. The sitemap is generated from published page collections; the redirect page and internal documentation are excluded.
 
+The top-level `404.html` prevents Cloudflare Pages from treating missing URLs as homepage routes. Missing pages return HTTP 404 and are excluded from indexing and the sitemap.
+
 ## Images and legacy URLs
 
 The homepage uses `images/syrgjyn-hero.webp` (1920 x 1280, approximately 125 KB). The original `images/syrgjyn-band-tirana-hero.jpg` is retained for press downloads and the existing EPK. Byte-identical copies at `hero-bg.jpg` and `images/hero-bg.jpg` were removed; both old URLs redirect to the original press photo on Cloudflare. Keep the original photo and `Syrgjyn_Official_EPK.pdf`.
@@ -46,7 +48,7 @@ Deploy only the contents of `_site`, including `_redirects`. Do not upload the s
 - Existing Cloudflare Pages project with Git integration: production branch `main`, build command `npm run build`, output directory `_site`.
 - Existing Direct Upload project: upload the built `_site` directory, or a ZIP whose root contains its contents, to that existing project. Do not delete the project or move custom domains as part of this cleanup.
 
-Older setup notes described a Direct Upload project named `syrgjyn`. Its current configuration has not been verified. A GitHub commit alone is not proof that the live domain deployed. After publication, verify the real domain, navigation, original article, Members redirect, EPK and photo downloads.
+The repository is connected to Cloudflare Pages project `syrgjyn-cms`; its branch-preview deployment was verified on 24 November 2026. Older setup notes described a separate Direct Upload project named `syrgjyn`. A successful preview alone is not proof that the live domain deployed. After publication, verify the real domain, navigation, original article, Members redirect, EPK and photo downloads.
 
 ## Deferred setup
 

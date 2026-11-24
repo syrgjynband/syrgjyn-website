@@ -23,7 +23,7 @@ for (const file of pages) {
   const html = fs.readFileSync(file, "utf8");
   assert(!/<!-- (NAVIGATION|BAND_LINEUP|UPCOMING_SHOWS|CHRONICLES) -->/.test(html), `Unrendered data in ${file}`);
   assert.equal((html.match(/<title>/g) || []).length, 1, `Title count in ${file}`);
-  assert.equal((html.match(/rel="canonical"/g) || []).length, 1, `Canonical count in ${file}`);
+  assert.equal((html.match(/rel="canonical"/g) || []).length, file === path.join(root, "404.html") ? 0 : 1, `Canonical count in ${file}`);
   if (!html.includes('name="robots" content="noindex"')) {
     assert.equal((html.match(/<h1\b/g) || []).length, 1, `H1 count in ${file}`);
     assert(html.includes('href="/press/"'), `Missing Press navigation in ${file}`);
@@ -66,6 +66,7 @@ assert(shows.includes("Check-In Fest") && shows.includes("2023-10-03"));
 assert(fs.statSync(path.join(root, "images/syrgjyn-hero.webp")).size < 500000, "Hero size budget");
 assert(!fs.existsSync(path.join(root, "images/hero-bg.jpg")));
 assert.equal(redirects.get("/members/"), "/about/#lineup");
+assert(read("404.html").includes('<meta name="robots" content="noindex">'));
 const sitemap = [...read("sitemap.xml").matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
 const expected = pages.filter(file => !fs.readFileSync(file, "utf8").includes('name="robots" content="noindex"')).map(file => "https://syrgjyn.com" + pageUrl(file));
 assert.deepEqual([...sitemap].sort(), expected.sort(), "Sitemap must include all published canonical pages");
