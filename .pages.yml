@@ -4,6 +4,61 @@ media:
   output: /images
 
 content:
+  - name: gallery
+    label: Photo Gallery
+    type: file
+    path: _data/gallery.json
+    format: json
+    fields:
+      - name: intro
+        label: Gallery Introduction
+        type: text
+      - name: photos
+        label: Photographs
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Photo ID
+            type: string
+            readonly: true
+          - name: sourceFilename
+            label: Original Filename
+            type: string
+            readonly: true
+          - name: caption
+            label: Caption
+            type: string
+            required: true
+          - name: alt
+            label: Image Description
+            type: text
+            required: true
+          - name: credit
+            label: Photographer Credit (Optional)
+            type: string
+          - name: featured
+            label: Show on Homepage (First Six)
+            type: boolean
+          - name: small
+            label: Small Image
+            type: image
+            readonly: true
+          - name: medium
+            label: Medium Image
+            type: image
+            readonly: true
+          - name: large
+            label: Large Image
+            type: image
+            readonly: true
+          - name: width
+            type: number
+            readonly: true
+          - name: height
+            type: number
+            readonly: true
+
   - name: band
     label: Band Information
     type: file

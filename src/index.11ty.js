@@ -1,6 +1,7 @@
 
 const { renderPage } = require("./_cards.cjs");
 const { navigation, lineup, splitShows, showList } = require("./_site.cjs");
+const { galleryGrid } = require("./_gallery.cjs");
 
 module.exports = class {
   data() {
@@ -16,6 +17,7 @@ module.exports = class {
       data.collections.chronicles || []
     ).replace("<!-- NAVIGATION -->", navigation())
       .replace("<!-- BAND_LINEUP -->", lineup(data.band))
+      .replace("<!-- GALLERY_PREVIEW -->", galleryGrid(data.gallery.photos.filter(photo => photo.featured).slice(0, 6), { preview: true }))
       .replace("<!-- UPCOMING_SHOWS -->", showList(splitShows(data.shows).upcoming));
 
     const musicGroup = {
@@ -66,6 +68,6 @@ module.exports = class {
       throw new Error("Homepage closing head tag missing");
     }
 
-    return html.replace(/<\/head\s*>/i, schema + "\n</head>");
+    return html.replace(/<\/head\s*>/i, '<link rel="stylesheet" href="/assets/gallery.css">\n' + schema + "\n</head>");
   }
 };

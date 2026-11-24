@@ -18,6 +18,7 @@ The `.pages.yml` configuration exposes:
 - **The Chronicles:** Markdown articles in `content/posts/`. The existing Alkimia story keeps its original URL. Each published article appears once on the homepage and blog.
 - **Band Information:** short press biography and current lineup in `_data/band.json`. Lineup changes feed the homepage, About, Press and homepage structured data. The user confirmed Arvit Banishta as current bassist on 24 November 2026.
 - **Shows & Live History:** confirmed shows and a history summary in `_data/shows.json`. Dates use `YYYY-MM-DD`. At build time, dates on or after today in Europe/Tirane appear as upcoming, and earlier dates appear in the archive. Rebuild after a concert date passes to refresh this classification. Do not add unverified shows.
+- **Photo Gallery:** captions, accessible image descriptions, optional photographer credits and homepage selections in `_data/gallery.json`. Source filenames are retained to make later credits easy to match. Image paths and dimensions are read-only; each photograph has optimized 480px and 960px variants and a larger viewing version in `images/gallery/`. Add new optimized images and their metadata together. The original Drive photos are not modified or copied into the website repository.
 
 If Cloudflare Git integration is enabled, CMS commits should trigger a rebuild. The CMS editor itself still requires repository authorization; this cleanup does not grant it access.
 
@@ -28,6 +29,7 @@ If Cloudflare Git integration is enabled, CMS commits should trigger a rebuild. 
 - `/discography/`: releases and official listening links.
 - `/shows/`: upcoming dates and archive from shared show data.
 - `/blog.html`: CMS-generated Chronicles cards.
+- `/gallery/`: live photo archive with a responsive grid and an accessible full-size viewer. Gallery links work as standalone images without JavaScript. The homepage previews up to six featured photographs. Captions, credits and order can be edited in Pages CMS.
 - `/press/`: short biography, current lineup, original photo downloads, existing EPK and press contact.
 - `/#merch` and `/#contact`: merchandise and contact.
 

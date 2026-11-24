@@ -21,12 +21,13 @@ const ids = new Map(pages.map(file => {
 }));
 for (const file of pages) {
   const html = fs.readFileSync(file, "utf8");
-  assert(!/<!-- (NAVIGATION|BAND_LINEUP|UPCOMING_SHOWS|CHRONICLES) -->/.test(html), `Unrendered data in ${file}`);
+  assert(!/<!-- (NAVIGATION|BAND_LINEUP|UPCOMING_SHOWS|CHRONICLES|GALLERY_PREVIEW) -->/.test(html), `Unrendered data in ${file}`);
   assert.equal((html.match(/<title>/g) || []).length, 1, `Title count in ${file}`);
   assert.equal((html.match(/rel="canonical"/g) || []).length, file === path.join(root, "404.html") ? 0 : 1, `Canonical count in ${file}`);
   if (!html.includes('name="robots" content="noindex"')) {
     assert.equal((html.match(/<h1\b/g) || []).length, 1, `H1 count in ${file}`);
     assert(html.includes('href="/press/"'), `Missing Press navigation in ${file}`);
+    assert(html.includes('href="/gallery/"'), `Missing Gallery navigation in ${file}`);
     assert.equal((html.match(/name="description"/g) || []).length, 1, `Description count in ${file}`);
   }
   for (const script of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) JSON.parse(script[1]);
@@ -84,10 +85,27 @@ assert.equal(todayInTirana(new Date("2026-11-23T23:30:00Z")), "2026-11-24");
 assert.throws(() => splitShows({ events: [{ date: "2026-02-30", title: "Invalid", city: "Tirana" }] }));
 assert(!showList([{ ...events[0], title: '<script>alert("x")</script>' }]).includes("<script>"));
 const cms = yaml.load(fs.readFileSync(path.join(__dirname, "..", ".pages.yml"), "utf8"));
-for (const name of ["band", "shows"]) {
+for (const name of ["band", "shows", "gallery"]) {
   const entry = cms.content.find(item => item.name === name);
   assert(entry && entry.format === "json");
   const data = JSON.parse(fs.readFileSync(path.join(__dirname, "..", entry.path), "utf8"));
   for (const field of entry.fields) assert(Object.hasOwn(data, field.name), `Missing CMS field ${name}.${field.name}`);
 }
-console.log(`Passed: ${pages.length} HTML pages, local links/anchors/assets, metadata, schemas, sitemap, redirects, lineup, CMS config, cards, date boundaries and hero size.`);
+const gallery = require("../_data/gallery.json");
+const galleryHtml = read("gallery/index.html");
+assert.equal(new Set(gallery.photos.map(photo => photo.id)).size, gallery.photos.length, "Unique photo IDs");
+assert.equal(new Set(gallery.photos.map(photo => photo.sourceFilename)).size, gallery.photos.length, "Unique gallery originals");
+assert.equal((galleryHtml.match(/data-gallery-item/g) || []).length, gallery.photos.length, "Every photo is displayed");
+assert.equal((home.match(/class="gallery-photo"/g) || []).length, Math.min(6, gallery.photos.filter(photo => photo.featured).length), "Homepage gallery selection");
+assert(!home.includes("photos coming soon"));
+assert(galleryHtml.includes('<dialog id="gallery-viewer"'));
+assert(galleryHtml.includes('href="/assets/gallery.css"') && galleryHtml.includes('src="/assets/gallery.js"'));
+for (const photo of gallery.photos) {
+  assert(/^[a-z0-9-]+$/.test(photo.id) && photo.caption && photo.alt, "Photo descriptions and safe IDs");
+  assert(Number.isInteger(photo.width) && Number.isInteger(photo.height) && photo.width > 0 && photo.height > 0, "Photo dimensions");
+  for (const [variant, budget] of [["small", 120000], ["medium", 300000], ["large", 650000]]) {
+    assert(/^\/images\/gallery\/[a-z0-9-]+\.webp$/.test(photo[variant]), "Local optimized image paths");
+    assert(fs.statSync(path.join(root, photo[variant])).size < budget, `Gallery image exceeds ${variant} budget: ${photo.id}`);
+  }
+}
+console.log(`Passed: ${pages.length} HTML pages, local links/anchors/assets, metadata, schemas, sitemap, redirects, lineup, CMS, cards, dates, hero and ${gallery.photos.length} optimized gallery photos.`);
