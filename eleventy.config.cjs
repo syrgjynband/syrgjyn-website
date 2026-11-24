@@ -1,11 +1,14 @@
 module.exports = function (eleventyConfig) {
-  // Existing HTML is kept unchanged in GitHub. The JavaScript templates read
-  // it as the design source and produce the deployed index.html and blog.html.
+  // Root HTML files provide the design; JavaScript templates render CMS data.
   eleventyConfig.setTemplateFormats(["md", "11ty.js"]);
+  eleventyConfig.ignores.add("README-SETUP.md");
+  eleventyConfig.ignores.add("SEO-CHANGELOG.md");
   eleventyConfig.addPassthroughCopy({ images: "images" });
   eleventyConfig.addPassthroughCopy("Syrgjyn_Official_EPK.pdf");
   eleventyConfig.addPassthroughCopy("robots.txt");
-  eleventyConfig.addPassthroughCopy({ posts: "posts" });
+  eleventyConfig.addPassthroughCopy("_redirects");
+  eleventyConfig.addWatchTarget("index.html");
+  eleventyConfig.addWatchTarget("blog.html");
 
   eleventyConfig.addCollection("chronicles", function (collectionApi) {
     return collectionApi.getFilteredByGlob("./content/posts/*.md")

@@ -1,6 +1,7 @@
 
 const fs = require("node:fs");
 const { escapeHtml } = require("./_cards.cjs");
+const { navigation, lineup, splitShows, showList, section: renderSection } = require("./_site.cjs");
 
 const pages = [
   {
@@ -37,28 +38,10 @@ const pages = [
     title: "Syrgjyn Live Shows | Metal Concerts & Bookings",
     description: "Find updates about Syrgjyn live performances in Albania and contact the band for festivals, concerts and booking inquiries.",
     heading: "Live Shows",
-    parts: [
-      ["Upcoming dates", "No upcoming concert dates have been announced on this page. Check back for updates."],
-      ["Past shows", "Syrgjyn performed at Check-In Fest in Tirana on October 3, 2023. The band also held regular Saturday-night performances at Alkimia between 2005 and 2011."],
-      ["Book Syrgjyn", "For festival appearances, venue bookings and concert inquiries, contact the band directly."]
-    ],
+    parts: [],
     links: [
       ["Send a booking inquiry", "mailto:info@syrgjyn.com?subject=Syrgjyn%20Booking%20Inquiry"],
       ["Read the live-history story", "/posts/we-kept-the-fire-burning.html"]
-    ]
-  },
-  {
-    slug: "members",
-    title: "Syrgjyn Band Members | Vocals, Guitars, Bass & Drums",
-    description: "Meet the members of Syrgjyn, the Albanian underground metal band from Tirana, founded in 1999.",
-    heading: "Syrgjyn Members",
-    parts: [
-      ["Lineup", "Gjergj Mero: guitars and vocals. Olsi Gjondedaj: guitars. Arvit Banishta: bass. Bes M.: drums."],
-      ["Band history", "The lineup has changed over time. From September 2005 through August 2011, Syrgjyn regularly performed at Alkimia as a two-person act with a drum machine."]
-    ],
-    links: [
-      ["Read the band history", "/about/"],
-      ["Booking and contact", "/#contact"]
     ]
   },
   {
@@ -66,11 +49,7 @@ const pages = [
     title: "Syrgjyn Press & Media | Albanian Underground Metal",
     description: "Press information for Syrgjyn, the Albanian metal band founded in Tirana in 1999. Find background, music links and media contact details.",
     heading: "Press & Media",
-    parts: [
-      ["Band background", "Syrgjyn is an underground metal band formed in Tirana in 1999. The band released Manifest of Essence in 2010 and has a long performance history in the Albanian underground scene."],
-      ["For journalists and promoters", "For interviews, concert booking, press inquiries or official images, contact the band at info@syrgjyn.com."],
-      ["Official music and stories", "Listen to the band’s recordings and explore firsthand writing about its performances and history."]
-    ],
+    parts: [],
     links: [
       ["DOWNLOAD OFFICIAL EPK (PDF)", "/Syrgjyn_Official_EPK.pdf"],
       ["Email Syrgjyn", "mailto:info@syrgjyn.com?subject=Press%20Inquiry"],
@@ -86,15 +65,16 @@ module.exports = class SectionPages {
       pagination: {
         data: "sections",
         size: 1,
-        alias: "section"
+        alias: "section",
+        addAllPagesToCollections: true
       },
       sections: pages,
       permalink: data => `${data.section.slug}/index.html`,
-      eleventyExcludeFromCollections: true
+      eleventyExcludeFromCollections: false
     };
   }
 
-  render({ section }) {
+  render({ section, band, shows }) {
     const home = fs.readFileSync("index.html", "utf8");
     const css = home.match(/<style>([\s\S]*?)<\/style>/i)[1];
     const e = escapeHtml;
@@ -113,9 +93,27 @@ module.exports = class SectionPages {
       return `<a href="${e(link)}" ${className} ${external} ${download}>${e(name)}</a>`;
     }).join("");
 
-    const sections = section.parts.map(([head, body]) =>
+    let sections = section.parts.map(([head, body]) =>
       `<section><div class="wrap"><h2>${e(head)}</h2><p class="lead" style="max-width:760px;line-height:1.85;font-size:18px">${e(body)}</p></div></section>`
     ).join("");
+
+    if (section.slug === "about") {
+      sections += renderSection("2010: Manifest of Essence", '<p class="lead">Syrgjyn released Manifest of Essence in 2010, during the Alkimia years.</p>');
+      sections += renderSection("Now: original music", '<p class="lead">The second album project, Sedentary Death Syndrome, is in development. No release date has been announced.</p>');
+      sections += renderSection("Current lineup", lineup(band), "lineup");
+    }
+    if (section.slug === "shows") {
+      const { upcoming, past } = splitShows(shows);
+      sections = renderSection("Upcoming dates", showList(upcoming)) +
+        renderSection("Past shows", showList(past, "Past show announcements will appear here.") + `<p class="lead" style="margin-top:24px">${e(shows.history || "")}</p>`) +
+        renderSection("Book Syrgjyn", '<p class="lead">For festival appearances, venue bookings and concert inquiries, contact info@syrgjyn.com.</p>');
+    }
+    if (section.slug === "press") {
+      sections = renderSection("Short biography", `<p class="lead press-bio">${e(band.shortBio)}</p>`) +
+        renderSection("Current lineup", lineup(band)) +
+        renderSection("Press photographs", '<p class="lead">Original website photographs are available below. Contact info@syrgjyn.com to confirm credits and publication permissions, or request alternative images.</p><div class="page-links"><a href="/images/syrgjyn-band-tirana-hero.jpg" download>Download band photo (JPG, 9 MB)</a><a href="/images/syrgjyn-live-alkimia-tirana.jpg" download>Download Alkimia archive photo (JPG)</a></div>') +
+        renderSection("Interviews, press and booking", '<p class="lead">For interviews, review copies, photo credits and bookings, email <a href="mailto:info@syrgjyn.com?subject=Press%20Inquiry">info@syrgjyn.com</a>.</p>');
+    }
 
     const ld = JSON.stringify({
       "@context": "https://schema.org",
@@ -193,16 +191,7 @@ ${css}
 <div class="wrap">
 <nav>
 <a class="logo" href="/">WELCOME TO SYRGJYN AREA</a>
-<div class="navlinks">
-<a href="/">Home</a>
-<a href="/about/">About</a>
-<a href="/discography/">Music</a>
-<a href="/shows/">Shows</a>
-<a href="/members/">Members</a>
-<a href="/press/">Press</a>
-<a href="/blog.html">Blog</a>
-<a href="/#contact">Booking</a>
-</div>
+${navigation()}
 </nav>
 </div>
 </header>

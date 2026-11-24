@@ -1,53 +1,59 @@
-# Syrgjyn: Pages CMS + Eleventy + Cloudflare Pages
+# Syrgjyn website
 
-This package contains **new or updated configuration files only**. It is intended to be merged into the EXISTING `syrgjynband/syrgjyn-website` GitHub repository, not uploaded to Cloudflare as a finished website.
+Eleventy builds the official site from the existing HTML design, Markdown articles and shared band/show data. The output directory is `_site`.
 
-## Preserve existing files
+## Build and check
 
-Do **not** delete or overwrite `index.html`, `blog.html`, `posts/we-kept-the-fire-burning.html`, or `images/hero-bg.jpg`. Those files are the design and content source. The build adds dynamic CMS articles without destroying the existing story.
+Use Node.js 20 or newer:
 
-## Installation
+    npm ci
+    npm run check
 
-1. Download and unzip this package.
-2. In GitHub, open `syrgjynband/syrgjyn-website` on the `main` branch.
-3. Upload these files while preserving directories. **Replace `.pages.yml`** with the provided version. The ZIP is not uploaded directly to GitHub as a single file.
-4. Do not delete existing files. An extra `hero-bg.jpg` in the root is harmless.
-5. In Pages CMS, refresh the repository. Your existing six editor fields remain.
+`npm run check` cleans and rebuilds `_site`, then checks internal links and anchors, image/PDF assets, metadata, JSON-LD, sitemap coverage, redirects, CMS configuration, article-card uniqueness, band lineup, show-date boundaries and the hero image size. `npm run dev` starts the local preview.
 
-## Test locally (optional)
+## Edit content in Pages CMS
 
-In a clone of the complete repository, run:
+The `.pages.yml` configuration exposes:
 
-    npm install
-    npm run build
+- **The Chronicles:** Markdown articles in `content/posts/`. The existing Alkimia story keeps its original URL. Each published article appears once on the homepage and blog.
+- **Band Information:** short press biography and current lineup in `_data/band.json`. Lineup changes feed the homepage, About, Press and homepage structured data. The user confirmed Arvit Banishta as current bassist on 24 November 2026.
+- **Shows & Live History:** confirmed shows and a history summary in `_data/shows.json`. Dates use `YYYY-MM-DD`. At build time, dates on or after today in Europe/Tirane appear as upcoming, and earlier dates appear in the archive. Rebuild after a concert date passes to refresh this classification. Do not add unverified shows.
 
-The output folder will be `_site`. Verify `_site/index.html`, `_site/blog.html`, `_site/posts/we-kept-the-fire-burning.html` and `_site/images/hero-bg.jpg` exist.
+If Cloudflare Git integration is enabled, CMS commits should trigger a rebuild. The CMS editor itself still requires repository authorization; this cleanup does not grant it access.
 
-## Connect to Cloudflare safely
+## Site structure
 
-Your live Cloudflare Pages project `syrgjyn` is a Direct Upload project, which cannot be converted to Git integration. **Do not delete it**.
+- `/`: music, short band introduction, current lineup, upcoming shows and latest articles.
+- `/about/`: band history and authoritative lineup at `#lineup`.
+- `/discography/`: releases and official listening links.
+- `/shows/`: upcoming dates and archive from shared show data.
+- `/blog.html`: CMS-generated Chronicles cards.
+- `/press/`: short biography, current lineup, original photo downloads, existing EPK and press contact.
+- `/#merch` and `/#contact`: merchandise and contact.
 
-1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git.
-2. Choose the GitHub repository `syrgjynband/syrgjyn-website`.
-3. Choose production branch `main`.
-4. Build command: `npm run build`
-5. Build output directory: `_site`
-6. Root directory: `/` (repository root).
-7. Deploy the **new** project under a temporary pages.dev subdomain and test the homepage, blog, existing article and background image.
-8. In Pages CMS, create a new test entry. The GitHub commit should trigger another Cloudflare deployment, generating `posts/<slug>.html` and adding a card on both homepage and blog page.
-9. Only after confirming that everything works, transfer `syrgjyn.com` and `www.syrgjyn.com` from the old Cloudflare Pages project to the new one via Cloudflare custom domains. This is a later step; avoid removing existing domains until preview passes.
+`/members`, `/members/` and `/members/index.html` redirect permanently to `/about/#lineup` through Cloudflare's `_redirects` file. A small HTML fallback also preserves the link on static previews. The sitemap is generated from published page collections; the redirect page and internal documentation are excluded.
 
-## How this works
+The top-level `404.html` prevents Cloudflare Pages from treating missing URLs as homepage routes. Missing pages return HTTP 404 and are excluded from indexing and the sitemap.
 
-- Pages CMS writes Markdown files to `content/posts/`.
-- Eleventy processes Markdown into HTML article pages.
-- The two JS page templates load the unchanged root `index.html` and `blog.html`, and insert cards for new CMS posts into the existing `.post-grid`.
-- `posts/` is copied unchanged, preserving the legacy article URL.
-- `images/` is copied unchanged.
-- The output folder `_site/` contains the deployable website.
+## Images and legacy URLs
 
-## Notes
+The homepage uses `images/syrgjyn-hero.webp` (1920 x 1280, approximately 125 KB). The original `images/syrgjyn-band-tirana-hero.jpg` is retained for press downloads and the existing EPK. Byte-identical copies at `hero-bg.jpg` and `images/hero-bg.jpg` were removed; both old URLs redirect to the original press photo on Cloudflare. Keep the original photo and `Syrgjyn_Official_EPK.pdf`.
 
-- CMS post filenames are slug-based Markdown files. Avoid naming a new CMS article `we-kept-the-fire-burning`, because that URL is already used by the original HTML article.
-- Never place credentials, API keys, or private material in this public GitHub repository.
-- If you update the site's HTML design later, edit the root HTML files in GitHub. Eleventy picks up those design changes.
+The unused `_includes/index.html` homepage copy was removed. Root `index.html` and `blog.html` remain design templates, not deployable standalone files. Their marked regions are populated by Eleventy. Shared navigation is in `src/_site.cjs`.
+
+## Deploy without changing hosting
+
+Deploy only the contents of `_site`, including `_redirects`. Do not upload the source repository as a static site.
+
+- Existing Cloudflare Pages project with Git integration: production branch `main`, build command `npm run build`, output directory `_site`.
+- Existing Direct Upload project: upload the built `_site` directory, or a ZIP whose root contains its contents, to that existing project. Do not delete the project or move custom domains as part of this cleanup.
+
+The repository is connected to Cloudflare Pages project `syrgjyn-cms`; its branch-preview deployment was verified on 24 November 2026. Older setup notes described a separate Direct Upload project named `syrgjyn`. A successful preview alone is not proof that the live domain deployed. After publication, verify the real domain, navigation, original article, Members redirect, EPK and photo downloads.
+
+## Deferred setup
+
+The former mailing-list button only opened an email. It is now labelled honestly as band contact. No subscriber data is collected. A real mailing service, opt-in form and unsubscribe handling remain to be configured with the band.
+
+Original photograph links are provided with a request to confirm credits and publication permissions. No new photographs or rights claims were introduced. The EPK PDF is unchanged.
+
+Do not store credentials, API keys or subscriber information in this public repository.

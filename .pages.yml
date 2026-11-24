@@ -4,6 +4,65 @@ media:
   output: /images
 
 content:
+  - name: band
+    label: Band Information
+    type: file
+    path: _data/band.json
+    format: json
+    fields:
+      - name: shortBio
+        label: Short Press Biography
+        type: text
+        required: true
+      - name: members
+        label: Current Lineup
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Member Name
+            type: string
+            required: true
+          - name: role
+            label: Instrument / Role
+            type: string
+            required: true
+
+  - name: shows
+    label: Shows & Live History
+    type: file
+    path: _data/shows.json
+    format: json
+    fields:
+      - name: events
+        label: Confirmed Shows
+        type: object
+        list: true
+        fields:
+          - name: date
+            label: Date (YYYY-MM-DD)
+            type: date
+            required: true
+            options:
+              format: yyyy-MM-dd
+          - name: title
+            label: Event / Festival
+            type: string
+            required: true
+          - name: city
+            label: City
+            type: string
+            required: true
+          - name: venue
+            label: Venue
+            type: string
+          - name: details
+            label: Doors / Additional Information
+            type: text
+      - name: history
+        label: Live History Summary
+        type: text
+
   - name: chronicles
     label: The Chronicles
     type: collection
@@ -35,6 +94,14 @@ content:
       - name: cover
         label: Cover Image
         type: image
+
+      - name: coverAlt
+        label: Cover Image Description
+        type: string
+
+      - name: author
+        label: Author
+        type: string
 
       - name: body
         label: Article Content

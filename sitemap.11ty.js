@@ -10,14 +10,9 @@ module.exports = class Sitemap {
   render({ collections }) {
     const base = "https://syrgjyn.com";
 
-    const urls = [
-      base + "/",
-      base + "/blog.html",
-      ...["about", "discography", "shows", "members", "press"].map(p => base + "/" + p + "/"),
-      ...collections.chronicles
-        .filter(post => post.url)
-        .map(post => base + post.url)
-    ];
+    const urls = collections.all
+      .filter(page => page.url && /(?:\.html|\/)$/i.test(page.url))
+      .map(page => base + page.url.replace(/\/index\.html$/, "/"));
 
     const escapeXml = value => value
       .replace(/&/g, "&amp;")
