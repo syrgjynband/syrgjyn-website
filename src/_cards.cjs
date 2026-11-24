@@ -34,9 +34,9 @@ function card(post) {
 }
 function renderPage(fileName, posts) {
   const original = fs.readFileSync(path.join(process.cwd(), fileName), "utf8");
-  const marker = '<div class="post-grid">';
-  if (!original.includes(marker)) throw new Error(`${fileName}: expected post-grid marker missing`);
-  // Existing legacy article remains in the existing grid. CMS posts precede it.
-  return original.replace(marker, marker + "\n" + posts.map(card).join("\n"));
+  const marker = "<!-- CHRONICLES -->";
+  if (!original.includes(marker)) throw new Error(`${fileName}: expected Chronicles marker missing`);
+  const unique = [...new Map(posts.map(post => [post.url, post])).values()];
+  return original.replace(marker, unique.map(card).join("\n"));
 }
 module.exports = { escapeHtml, displayDate, safeImage, card, renderPage };

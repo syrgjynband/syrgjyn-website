@@ -1,11 +1,12 @@
 
 const { renderPage } = require("./_cards.cjs");
+const { navigation, lineup, splitShows, showList } = require("./_site.cjs");
 
 module.exports = class {
   data() {
     return {
       permalink: "index.html",
-      eleventyExcludeFromCollections: true
+      eleventyExcludeFromCollections: false
     };
   }
 
@@ -13,7 +14,9 @@ module.exports = class {
     const html = renderPage(
       "index.html",
       data.collections.chronicles || []
-    );
+    ).replace("<!-- NAVIGATION -->", navigation())
+      .replace("<!-- BAND_LINEUP -->", lineup(data.band))
+      .replace("<!-- UPCOMING_SHOWS -->", showList(splitShows(data.shows).upcoming));
 
     const musicGroup = {
       "@context": "https://schema.org",
@@ -48,7 +51,10 @@ module.exports = class {
             "@id": "https://syrgjyn.com/#band"
           }
         }
-      ]
+      ],
+      "member": data.band.members.map(member => ({
+        "@type": "Person", "name": member.name, "description": member.role
+      }))
     };
 
     const json = JSON.stringify(musicGroup)

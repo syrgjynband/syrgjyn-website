@@ -1,0 +1,9 @@
+{
+  "shortBio": "Syrgjyn is an Albanian underground metal band formed in Tirana in 1999. The band released Manifest of Essence in 2010 and became part of Tirana's underground music culture through years of live performances, including a Saturday-night residency at Alkimia between September 2005 and August 2011.",
+  "members": [
+    { "name": "Gjergj Mero", "role": "Guitars, vocals" },
+    { "name": "Olsi Gjondedaj", "role": "Guitars" },
+    { "name": "Arvit Banishta", "role": "Bass" },
+    { "name": "Bes M.", "role": "Drums" }
+  ]
+}

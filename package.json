@@ -4,10 +4,13 @@
   "private": true,
   "description": "Syrgjyn official website with Pages CMS and Eleventy",
   "scripts": {
+    "prebuild": "node scripts/clean.cjs",
     "build": "eleventy",
-    "dev": "eleventy --serve"
+    "dev": "eleventy --serve",
+    "check": "npm run build && node scripts/check-site.cjs"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.2"
+    "@11ty/eleventy": "^3.1.2",
+    "js-yaml": "^4.3.2"
   }
 }

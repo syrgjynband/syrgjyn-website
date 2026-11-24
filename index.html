@@ -57,7 +57,7 @@
   padding:60px 18px;
   background: 
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), /* dark overlay */
-    url('images/hero-bg.jpg') center/cover no-repeat; /* your image */
+    url('/images/syrgjyn-hero.webp') center/cover no-repeat; /* your image */
   border-bottom:1px solid #111;
 }
 
@@ -67,7 +67,7 @@
     .cta { margin-top:28px; display:inline-block; border:2px solid var(--fg); padding:12px 22px; text-transform:uppercase; font-weight:700; letter-spacing:1px; transition:.25s; }
     .cta:hover { background:var(--fg); color:var(--bg); }
 
-    section { padding:64px 0; border-bottom: 1px solid #111; }
+    section { scroll-margin-top:140px; padding:64px 0; border-bottom: 1px solid #111; }
     h2 { text-transform: uppercase; letter-spacing:3px; font-size: 22px; margin:0 0 18px }
     p.lead { color: var(--muted); margin: 0 0 24px; }
 
@@ -77,6 +77,7 @@
     .card { background: var(--bg2); border:1px solid #141414; border-radius:16px; padding:18px; }
     .list { display:grid; gap:12px; }
     .show { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border:1px solid #141414; border-radius:12px; }
+    .show { overflow-wrap:anywhere; }
     .show small { color: var(--muted); }
 
     footer { padding:36px 0; text-align:center; color:var(--muted); font-size:14px; }
@@ -104,22 +105,14 @@
     .article-shell p { color:#ccc; line-height:1.85; font-size:18px; }
     .article-shell .back { display:inline-block; margin-bottom:32px; color:#bbb; text-decoration:underline; }
     .article-shell .intro { font-size:22px; color:#fff; }
-  @media (max-width: 720px) {nav {height:auto;min-height:64px;flex-wrap:wrap;gap:10px;padding:12px 0} .navlinks {display:flex;flex-wrap:wrap;gap:8px 14px} .navlinks a {margin-left:0} .logo {font-size:15px;letter-spacing:2px}}
 </style>
 </head>
 <body>
 <header>
 <div class="wrap">
 <nav>
-<div class="logo">WELCOME TO SYRGJYN AREA</div>
-<div class="navlinks">
-<a href="#music">Music</a>
-<a href="#video">Video</a>
-<a href="#shows">Shows</a>
-<a href="blog.html">Blog</a>
-<a href="#about">About</a>
-<a href="#contact">Contact</a>
-</div>
+<a class="logo" href="/">WELCOME TO SYRGJYN AREA</a>
+<!-- NAVIGATION -->
 </nav>
 </div>
 </header>
@@ -140,18 +133,19 @@
 <p class="lead">Stream Syrgjyn on Spotify. Crank it. Break something (responsibly).</p>
 <!-- Your Spotify embed (kept exactly as provided) -->
 <div style="border:1px solid #1a1a1a;border-radius:12px;overflow:hidden;">
-<iframe allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="" data-testid="embed-iframe" frameborder="0" height="352" loading="lazy" src="https://open.spotify.com/embed/artist/6Q56AfBOeaNPbrToA4vGDi?utm_source=generator" style="border-radius:12px" width="100%"></iframe>
+<iframe title="Listen to Syrgjyn on Spotify" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="" data-testid="embed-iframe" frameborder="0" height="352" loading="lazy" src="https://open.spotify.com/embed/artist/6Q56AfBOeaNPbrToA4vGDi?utm_source=generator" style="border-radius:12px" width="100%"></iframe>
 </div>
 </div>
 <div class="card">
-<h2 style="margin-bottom:8px;">Mailing List</h2>
-<p class="lead">First to get new tracks, gigs, and drops.</p>
-<a class="cta" href="mailto:info@syrgjyn.com?subject=Add%20me%20to%20Syrgjyn%20mailing%20list">Join via Email</a>
+<h2 style="margin-bottom:8px;">Stay in touch</h2>
+<p class="lead">Email the band about new tracks, gigs and drops. Mailing-list signup is coming soon.</p>
+<a class="cta" href="mailto:info@syrgjyn.com?subject=Syrgjyn%20Updates">Contact the band</a>
 </div>
 </div>
 </section>
 <!-- MERCH -->
-<section id="video">
+<section id="merch">
+<span id="video" aria-hidden="true"></span>
 <div class="wrap">
 <h2>MERCH</h2>
 <p class="lead">Get the album on Bandcamp. We'd love your support.</p>
@@ -165,12 +159,8 @@
 <section id="shows">
 <div class="wrap">
 <h2>Shows</h2>
-<p class="lead">Catch us live.</p>
-<div class="list">
-<div class="show"><div><strong>Oct 12, 2025</strong> — Tirana — Tulla Culture Center</div><small>Doors 20:00</small></div>
-<div class="show"><div><strong>Nov 08, 2025</strong> — Durrës — Volta</div><small>Doors 21:00</small></div>
-<div class="show"><div><strong>Dec 19, 2025</strong> — Shkodër — Kino</div><small>Doors 20:30</small></div>
-</div>
+<!-- UPCOMING_SHOWS -->
+<a class="cta" href="/shows/">Show updates &amp; archive</a>
 </div>
 </section>
 <!-- BLOG / THE CHRONICLES -->
@@ -178,17 +168,7 @@
 <div class="wrap">
 <h2>The Chronicles</h2>
 <p class="lead chronicles-intro">Words from the underground. Band updates, music, history, and the code we live by.</p>
-<div class="post-grid">
-<article class="post-card">
-<div aria-hidden="true" class="post-art">WE KEPT THE<br/>FIRE BURNING</div>
-<div class="post-content">
-<div class="post-meta">History · Alkimia · 2005–2011</div>
-<h3>We Kept the Fire Burning</h3>
-<p>Six years. Two musicians. One drum machine. Hundreds of gigs. And a fire that refused to die.</p>
-<a class="post-link" href="posts/we-kept-the-fire-burning.html">Read article →</a>
-</div>
-</article>
-</div>
+<div class="post-grid"><!-- CHRONICLES --></div>
 <a class="cta" href="blog.html">Explore the blog</a>
 </div>
 </section>
@@ -198,20 +178,16 @@
 <div>
 <h2>About</h2>
 <p class="lead">
-            Syrgjyn is considered by many as the most significant underground Albanian metal act.
-            We proudly and steadily paved the way for a new scene that emerged in the years after.
-            This is meant to be. Once again.
+            Formed in Tirana in 1999, Syrgjyn grew out of Albania’s underground metal scene.
+            From the Saturday nights at Alkimia to Manifest of Essence, this is our story.
             We don’t do background music. We do full body experiences.
           </p>
+<a class="post-link" href="/about/">Read the band history →</a>
 </div>
 <div class="card">
 <h2 style="margin-bottom:8px;">Members</h2>
-<div class="list">
-<div>Gjergj Mero - Guitars, Vocals</div>
-<div>Olsi Gjondedaj — Guitars</div>
-<div>TBA — Bass</div>
-<div>Bes M. — Drums</div>
-</div>
+<!-- BAND_LINEUP -->
+<a class="post-link" href="/about/#lineup">Band history &amp; lineup →</a>
 </div>
 </div>
 </section>
@@ -234,7 +210,6 @@
 </div>
 </div>
 </section>
-</main>
 <!-- GALLERY -->
 <section id="gallery">
 <div class="wrap">
@@ -243,6 +218,7 @@
 <p class="lead">More live and backstage photos coming soon.</p>
 </div>
 </section>
+</main>
 <footer>
 <div class="wrap">
 <p>© 2026 SYRGJYN — All rights reserved.</p>
