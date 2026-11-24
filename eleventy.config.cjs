@@ -4,6 +4,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.ignores.add("README-SETUP.md");
   eleventyConfig.ignores.add("SEO-CHANGELOG.md");
   eleventyConfig.addPassthroughCopy({ images: "images" });
+  eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("Syrgjyn_Official_EPK.pdf");
   eleventyConfig.addPassthroughCopy("robots.txt");
   eleventyConfig.addPassthroughCopy("_redirects");
