@@ -2,7 +2,7 @@
 window.REQUIRED_CODE_ERROR_MESSAGE = "Please choose a country code";
 window.LOCALE = "en";
 window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Please enter a valid email address and try again.";
-window.REQUIRED_ERROR_MESSAGE = "Please enter your email address.";
+window.REQUIRED_ERROR_MESSAGE = "Please complete the required fields and wait for the spam check to finish.";
 window.GENERIC_INVALID_MESSAGE = "Please enter a valid email address and try again.";
 window.INVALID_NUMBER = "Please enter a valid email address and try again.";
 window.INVALID_DATE = "Please enter a valid date";
