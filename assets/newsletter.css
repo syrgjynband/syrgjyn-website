@@ -1,0 +1,25 @@
+.newsletter-shell { max-width:660px; margin:0 auto; padding:72px 18px 48px; }
+.newsletter-intro h1 { font-size:clamp(42px,8vw,72px); text-transform:uppercase; letter-spacing:2px; line-height:1.05; margin:20px 0; }
+.newsletter-intro p { line-height:1.7; color:#bbb; }
+.newsletter-intro .lead { color:#fff; font-size:22px; }
+.newsletter-shell .sib-form { padding:24px 0 0; background:transparent; font-family:inherit; text-align:left; }
+.newsletter-shell #sib-container { background:#111; color:#fff; padding:26px 22px; border:1px solid #333; border-radius:12px; text-align:left; max-width:none; }
+.newsletter-shell .sib-form-block { padding:0; }
+.newsletter-shell .entry__label { font-family:inherit; color:#fff; font-size:16px; margin-bottom:10px; }
+.newsletter-shell .entry__field { background:#fff; border:1px solid #aaa; border-radius:4px; }
+.newsletter-shell input.input { color:#111; font-family:inherit; font-size:18px; min-height:48px; padding:10px 12px; }
+.newsletter-shell input.input::placeholder { color:#757575; }
+.newsletter-shell .newsletter-consent { color:#bbb; font-size:14px; line-height:1.7; margin:18px 0; }
+.newsletter-shell a, .newsletter-privacy a, footer a { text-decoration:underline; text-underline-offset:3px; }
+.newsletter-shell .sib-captcha { margin:20px 0; }
+.newsletter-shell .sib-form-block__button { font-family:inherit; font-size:16px; font-weight:700; color:#111; background:#fff; border:1px solid #fff; border-radius:4px; padding:14px 20px; cursor:pointer; }
+.newsletter-shell .sib-form-block__button:hover { background:#ddd; }
+.newsletter-shell .sib-form-block__button:focus-visible, .newsletter-shell input:focus-visible { outline:3px solid #7bc6ff; outline-offset:4px; }
+:where(.sib-form-message-panel) { display:none; }
+.newsletter-shell .sib-form-message-panel { max-width:none; border-radius:6px; font-size:16px; margin-bottom:18px; }
+.newsletter-shell #error-message { background:#381a1a; color:#ffcece; border:1px solid #b85858; }
+.newsletter-shell #success-message { background:#102b1e; color:#bdedd1; border:1px solid #448665; }
+.newsletter-shell .entry__error { color:#ffb8b8; font-size:14px; margin-top:8px; }
+.newsletter-shell .newsletter-note { color:#aaa; font-size:14px; line-height:1.7; margin-top:22px; }
+.newsletter-privacy h2 { font-size:24px; margin:40px 0 12px; }
+@media(max-width:400px) { .newsletter-shell #sib-container { padding:20px 10px; } .newsletter-shell { padding-left:12px; padding-right:12px; } }
