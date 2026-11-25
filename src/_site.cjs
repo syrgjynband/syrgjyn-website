@@ -4,7 +4,7 @@ function navigation() {
   const links = [
     ["Home", "/"], ["Music", "/discography/"], ["Shows", "/shows/"],
     ["Blog", "/blog.html"], ["Gallery", "/gallery/"], ["About", "/about/"], ["Press / EPK", "/press/"],
-    ["Merch", "/#merch"], ["Contact", "/#contact"]
+    ["Merch", "/#merch"], ["Newsletter", "/newsletter/"], ["Contact", "/#contact"]
   ];
   return `<div class="navlinks">${links.map(([label, url]) => `<a href="${url}">${label}</a>`).join("\n")}</div>`;
 }

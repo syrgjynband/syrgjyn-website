@@ -52,9 +52,30 @@ Deploy only the contents of `_site`, including `_redirects`. Do not upload the s
 
 The repository is connected to Cloudflare Pages project `syrgjyn-cms`; its branch-preview deployment was verified on 24 November 2026. Older setup notes described a separate Direct Upload project named `syrgjyn`. A successful preview alone is not proof that the live domain deployed. After publication, verify the real domain, navigation, original article, Members redirect, EPK and photo downloads.
 
-## Deferred setup
+## Newsletter
 
-The former mailing-list button only opened an email. It is now labelled honestly as band contact. No subscriber data is collected. A real mailing service, opt-in form and unsubscribe handling remain to be configured with the band.
+The homepage and shared navigation link to `/newsletter/`. The form uses Brevo's supported HTML embed protocol, including its public form endpoint, field/error containers, honeypot, locale, JavaScript, and Cloudflare Turnstile widget. The public endpoint and site key are in `_data/newsletter.json`; these are not credentials. The Turnstile validation secret is stored only in Brevo. Turnstile allows `syrgjyn.com` and its subdomains. Use the website URL when sharing the signup form; Brevo's hosted Quick Share URL is outside this widget's hostname allowlist.
+
+The newsletter page loads Brevo and Turnstile scripts; other pages do not load them. `/newsletter/privacy/` describes the data collected, service providers, subscription confirmation, reporting, and how to request changes or deletion.
+
+Brevo configuration as of 25 November 2026:
+
+- Domain: `syrgjyn.com`, authenticated and branded (`mail`).
+- Sender: `Syrgjyn <info@syrgjyn.com>`, verified.
+- Fan list: **Syrgjyn Newsletter — Confirmed Fans**, initially empty. The pre-existing **Your first list** is separate and is not selected by the signup form.
+- Form: **Syrgjyn Newsletter Signup**, ID `6b06a91a21a255498553f6e7`.
+- Double confirmation is required before a contact joins the fan list. The form hides after successful submission and asks the visitor to check their inbox.
+- Confirmation email: template #5, **Default Template Double opt-in confirmation**, uses `{{ doubleoptin }}`. Keep this token intact.
+- Welcome email after confirmation: template #3, **Default template - Final confirmation**.
+- Newsletter master: template #6, **Syrgjyn Newsletter — Master (draft)**, intentionally inactive. Replace every bracketed placeholder and add the band's approved public postal address before using it for a campaign. Keep the `{{ unsubscribe }}` link; `{{ mirror }}` provides the browser version.
+
+For each newsletter, create a campaign from the master, set its sender to `info@syrgjyn.com`, and select only the confirmed fan list. Check the subject, preview text, actual links, current news and approved footer address; send a test to a band-owned inbox before sending the campaign. No newsletter campaign is scheduled by this website.
+
+Share `https://syrgjyn.com/newsletter/` on social profiles and concert materials. Manually add only people who have explicitly requested updates; otherwise invite them to subscribe. Export the fan list from Brevo periodically for a private backup, preserving subscription and unsubscribe status. Do not re-import suppressed contacts as subscribed.
+
+The signup, email confirmation, welcome message, unsubscribe process and mobile layout should be checked after publication. Brevo account sending limits still apply. Do not buy an upgrade automatically; size the plan for both stored contacts and monthly sends when needed.
+
+## Photograph permissions
 
 Original photograph links are provided with a request to confirm credits and publication permissions. No new photographs or rights claims were introduced. The EPK PDF is unchanged.
 
