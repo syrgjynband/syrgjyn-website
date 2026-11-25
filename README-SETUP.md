@@ -60,7 +60,7 @@ The newsletter page loads Brevo and Turnstile scripts; other pages do not load t
 
 Brevo configuration as of 25 November 2026:
 
-- Domain: `syrgjyn.com`, authenticated and branded (`mail`).
+- Domain: `syrgjyn.com`, authenticated with optional link branding disabled. The initial `r.mail.syrgjyn.com` tracking endpoint returned a certificate-name error, so the band approved recreating Brevo's domain entry without branding. New messages use Brevo's standard secure link domains. Existing website, mailbox and DNS records were retained.
 - Sender: `Syrgjyn <info@syrgjyn.com>`, verified.
 - Fan list: **Syrgjyn Newsletter — Confirmed Fans**, initially empty. The pre-existing **Your first list** is separate and is not selected by the signup form.
 - Form: **Syrgjyn Newsletter Signup**, ID `6b06a91a21a255498553f6e7`.
