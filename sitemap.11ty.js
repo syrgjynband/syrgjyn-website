@@ -1,4 +1,5 @@
 
+const { publicPath } = require("./src/_urls.cjs");
 module.exports = class Sitemap {
   data() {
     return {
@@ -12,7 +13,7 @@ module.exports = class Sitemap {
 
     const urls = collections.all
       .filter(page => page.url && /(?:\.html|\/)$/i.test(page.url))
-      .map(page => base + page.url.replace(/\/index\.html$/, "/"));
+      .map(page => base + publicPath(page.url));
 
     const escapeXml = value => value
       .replace(/&/g, "&amp;")

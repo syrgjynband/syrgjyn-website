@@ -24,6 +24,8 @@ If Cloudflare Git integration is enabled, CMS commits should trigger a rebuild. 
 
 ## Site structure
 
+Cloudflare redirects `.html` requests to extensionless URLs. The build normalizes internal links, canonical tags, social metadata, structured data and sitemap entries to the served URLs (for example `/blog` and `/posts/we-kept-the-fire-burning`). Old `.html` links still work through Cloudflare's permanent redirects. Directory pages such as `/about/` retain their trailing slash. GitHub Actions runs the build checks on pushes and pull requests; checks require each indexable page to have a canonical matching its public URL and prevent redirecting HTML links from reappearing in the sitemap or generated pages. Intentional redirects such as Members and noindex error pages are not intended to be indexed individually.
+
 - `/`: music, short band introduction, current lineup, upcoming shows and latest articles.
 - `/about/`: band history and authoritative lineup at `#lineup`.
 - `/discography/`: releases and official listening links.
