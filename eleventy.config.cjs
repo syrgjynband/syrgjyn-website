@@ -1,4 +1,8 @@
 module.exports = function (eleventyConfig) {
+  const { normalizeHtml } = require("./src/_urls.cjs");
+  eleventyConfig.addTransform("public-urls", function (content) {
+    return this.page.outputPath?.endsWith(".html") ? normalizeHtml(content) : content;
+  });
   // Root HTML files provide the design; JavaScript templates render CMS data.
   eleventyConfig.setTemplateFormats(["md", "11ty.js"]);
   eleventyConfig.ignores.add("README-SETUP.md");

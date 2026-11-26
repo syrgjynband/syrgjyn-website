@@ -2,6 +2,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const yaml = require("js-yaml");
+const { publicPath, publicUrl } = require("../src/_urls.cjs");
 const { splitShows, todayInTirana, showList } = require("../src/_site.cjs");
 const root = path.join(__dirname, "..", "_site");
 const read = file => fs.readFileSync(path.join(root, file), "utf8");
@@ -14,6 +15,7 @@ function walk(dir) {
 const pages = walk(root).filter(file => file.endsWith(".html"));
 const redirects = new Map(read("_redirects").trim().split("\n").map(line => line.split(/\s+/)));
 const pageUrl = file => "/" + path.relative(root, file).split(path.sep).join("/").replace(/(^|\/)index\.html$/, "$1");
+const physicalPages = new Map(pages.map(file => [publicPath(pageUrl(file)), file]));
 const ids = new Map(pages.map(file => {
   const values = [...fs.readFileSync(file, "utf8").matchAll(/\bid=["']([^"']+)["']/g)].map(match => match[1]);
   assert.equal(new Set(values).size, values.length, `Duplicate IDs in ${file}`);
@@ -25,6 +27,9 @@ for (const file of pages) {
   assert.equal((html.match(/<title>/g) || []).length, 1, `Title count in ${file}`);
   assert.equal((html.match(/rel="canonical"/g) || []).length, file === path.join(root, "404.html") ? 0 : 1, `Canonical count in ${file}`);
   if (!html.includes('name="robots" content="noindex"')) {
+    const canonicalTag = html.match(/<link\b[^>]*rel="canonical"[^>]*>/)?.[0] || html.match(/<link\b[^>]*href="[^"]+"[^>]*rel="canonical"[^>]*>/)?.[0];
+    const canonical = canonicalTag?.match(/href="([^"]+)"/)?.[1];
+    assert.equal(canonical, "https://syrgjyn.com" + publicPath(pageUrl(file)), `Canonical must be the served URL in ${file}`);
     assert.equal((html.match(/<h1\b/g) || []).length, 1, `H1 count in ${file}`);
     assert(html.includes('href="/press/"'), `Missing Press navigation in ${file}`);
     assert(html.includes('href="/gallery/"'), `Missing Gallery navigation in ${file}`);
@@ -34,12 +39,13 @@ for (const file of pages) {
   const references = [...html.matchAll(/\b(?:href|src)=["']([^"']+)["']/g)].map(match => match[1]);
   references.push(...[...html.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g)].map(match => match[1]));
   for (const ref of references) {
-    const url = new URL(ref.replace(/&amp;/g, "&"), "https://syrgjyn.com" + pageUrl(file));
+    const url = new URL(ref.replace(/&amp;/g, "&"), "https://syrgjyn.com" + publicPath(pageUrl(file)));
     if (url.origin !== "https://syrgjyn.com") continue;
+    assert.equal(url.pathname, publicPath(url.pathname), `Internal links must avoid HTML redirects: ${ref}`);
     let target = url;
     if (redirects.has(target.pathname)) target = new URL(redirects.get(target.pathname), url.origin);
     const pathname = decodeURIComponent(target.pathname);
-    const destination = path.join(root, pathname, pathname.endsWith("/") ? "index.html" : "");
+    const destination = physicalPages.get(pathname) || path.join(root, pathname, pathname.endsWith("/") ? "index.html" : "");
     assert(fs.existsSync(destination), `Broken local link in ${file}: ${ref}`);
     if (target.hash && destination.endsWith(".html")) {
       assert(ids.get(destination)?.has(decodeURIComponent(target.hash.slice(1))), `Missing anchor in ${file}: ${ref}`);
@@ -69,7 +75,7 @@ assert(!fs.existsSync(path.join(root, "images/hero-bg.jpg")));
 assert.equal(redirects.get("/members/"), "/about/#lineup");
 assert(read("404.html").includes('<meta name="robots" content="noindex">'));
 const sitemap = [...read("sitemap.xml").matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
-const expected = pages.filter(file => !fs.readFileSync(file, "utf8").includes('name="robots" content="noindex"')).map(file => "https://syrgjyn.com" + pageUrl(file));
+const expected = pages.filter(file => !fs.readFileSync(file, "utf8").includes('name="robots" content="noindex"')).map(file => "https://syrgjyn.com" + publicPath(pageUrl(file)));
 assert.deepEqual([...sitemap].sort(), expected.sort(), "Sitemap must include all published canonical pages");
 assert(!sitemap.some(url => /members|README|CHANGELOG/.test(url)));
 const events = [
@@ -109,3 +115,10 @@ for (const photo of gallery.photos) {
   }
 }
 console.log(`Passed: ${pages.length} HTML pages, local links/anchors/assets, metadata, schemas, sitemap, redirects, lineup, CMS, cards, dates, hero and ${gallery.photos.length} optimized gallery photos.`);
+
+assert.equal(publicUrl("https://www.syrgjyn.com/blog.html?ref=test#news"), "https://syrgjyn.com/blog?ref=test#news");
+assert.equal(publicUrl("https://example.com/page.html"), "https://example.com/page.html");
+assert.equal(publicPath("/about/index.html#history"), "/about/#history");
+assert.equal(publicPath("/posts/new-cms-article.html"), "/posts/new-cms-article");
+assert.equal(new URL(publicUrl("index.html"), "https://syrgjyn.com/blog").href, "https://syrgjyn.com/");
+assert(sitemap.every(url => !new URL(url).pathname.endsWith(".html")), "Sitemap must not submit redirecting HTML URLs");
