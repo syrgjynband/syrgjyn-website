@@ -58,7 +58,7 @@ The homepage and shared navigation link to `/newsletter/`. The form uses Brevo's
 
 The newsletter page loads Brevo and Turnstile scripts; other pages do not load them. `/newsletter/privacy/` describes the data collected, service providers, subscription confirmation, reporting, and how to request changes or deletion.
 
-Brevo configuration as of 25 November 2026:
+Brevo configuration as of 26 November 2026:
 
 - Domain: `syrgjyn.com`, authenticated with optional link branding disabled. The initial `r.mail.syrgjyn.com` tracking endpoint returned a certificate-name error, so the band approved recreating Brevo's domain entry without branding. New messages use Brevo's standard secure link domains. Existing website, mailbox and DNS records were retained.
 - Sender: `Syrgjyn <info@syrgjyn.com>`, verified.
@@ -67,13 +67,14 @@ Brevo configuration as of 25 November 2026:
 - Double confirmation is required before a contact joins the fan list. The form hides after successful submission and asks the visitor to check their inbox.
 - Confirmation email: template #5, **Default Template Double opt-in confirmation**, uses `{{ doubleoptin }}`. Keep this token intact.
 - Welcome email after confirmation: template #3, **Default template - Final confirmation**.
+- Newsletter opt-out: **Syrgjyn Newsletter Unsubscribe**, ID `6b07ff6921a2554985544655`. Its public hosted URL is in `_data/newsletter.json` and linked from the welcome email, signup page and privacy page. It blocklists email campaigns account-wide. Keep this URL in the transactional welcome email: a transactional `{{ unsubscribe }}` link only stops that sender's transactional messages and does not unsubscribe newsletter campaigns.
 - Newsletter master: template #6, **Syrgjyn Newsletter — Master (draft)**, intentionally inactive. Replace every bracketed placeholder and add the band's approved public postal address before using it for a campaign. Keep the `{{ unsubscribe }}` link; `{{ mirror }}` provides the browser version.
 
 For each newsletter, create a campaign from the master, set its sender to `info@syrgjyn.com`, and select only the confirmed fan list. Check the subject, preview text, actual links, current news and approved footer address; send a test to a band-owned inbox before sending the campaign. No newsletter campaign is scheduled by this website.
 
 Share `https://syrgjyn.com/newsletter/` on social profiles and concert materials. Manually add only people who have explicitly requested updates; otherwise invite them to subscribe. Export the fan list from Brevo periodically for a private backup, preserving subscription and unsubscribe status. Do not re-import suppressed contacts as subscribed.
 
-The signup, email confirmation, welcome message, unsubscribe process and mobile layout should be checked after publication. Brevo account sending limits still apply. Do not buy an upgrade automatically; size the plan for both stored contacts and monthly sends when needed.
+Signup, confirmation and welcome delivery were tested with band-owned addresses after the domain reset. The newsletter opt-out was tested on 26 November 2026; Brevo showed Email campaigns **Blocklisted** afterwards. Retain suppression records when removing test addresses from the fan list. Recheck the flow and mobile layout after changes. Brevo account sending limits still apply. Do not buy an upgrade automatically; size the plan for both stored contacts and monthly sends when needed.
 
 ## Photograph permissions
 
