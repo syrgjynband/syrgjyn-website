@@ -24,20 +24,18 @@ If Cloudflare Git integration is enabled, CMS commits should trigger a rebuild. 
 
 ## Site structure
 
-Cloudflare redirects `.html` requests to extensionless URLs. The build normalizes internal links, canonical tags, social metadata, structured data and sitemap entries to the served URLs (for example `/blog` and `/posts/we-kept-the-fire-burning`). Old `.html` links still work through Cloudflare's permanent redirects. Directory pages such as `/about/` retain their trailing slash. GitHub Actions runs the build checks on pushes and pull requests; checks require each indexable page to have a canonical matching its public URL and prevent redirecting HTML links from reappearing in the sitemap or generated pages. Intentional redirects such as Members and noindex error pages are not intended to be indexed individually.
+The visible menu is Home, Blog, Gallery, Contact. Home contains music, article and gallery previews, and ends with the full About history and current lineup. Contact is the dedicated booking/inquiries page and links to press resources and the EPK. Shows, merchandise and newsletter signup pages/sections are retired. Their data can be retained for future use without displaying them publicly.
 
-- `/`: music, short band introduction, current lineup, upcoming shows and latest articles.
-- `/about/`: band history and authoritative lineup at `#lineup`.
-- `/discography/`: releases and official listening links.
-- `/shows/`: upcoming dates and archive from shared show data.
-- `/blog.html`: CMS-generated Chronicles cards.
-- `/gallery/`: live photo archive with a responsive grid and an accessible full-size viewer. Gallery links work as standalone images without JavaScript. The homepage previews up to six featured photographs. Captions, credits and order can be edited in Pages CMS.
-- `/press/`: short biography, current lineup, original photo downloads, existing EPK and press contact.
-- `/#merch` and `/#contact`: merchandise and contact.
+- `/`: music, news/gallery previews, About at `#about` and lineup at `#lineup`.
+- `/blog`: The Chronicles and individual CMS article links.
+- `/gallery/`: responsive photo archive and full-size viewer.
+- `/contact/`: email, booking, technical rider and press downloads.
+- `/press/`: retained media resource, linked from Contact and the homepage footer.
+- `/newsletter/privacy/`: unlisted privacy information for existing subscribers. Contact retains their unsubscribe link; no signup form is published.
 
-`/members`, `/members/` and `/members/index.html` redirect permanently to `/about/#lineup` through Cloudflare's `_redirects` file. A small HTML fallback also preserves the link on static previews. The sitemap is generated from published page collections; the redirect page and internal documentation are excluded.
+The sitemap follows only current generated pages. The build normalizes links, canonical tags and structured data to Cloudflare's served URLs. GitHub Actions checks the exact four-item menu and the current page structure in addition to URL consistency. Legacy About and Discography URLs redirect directly to the corresponding homepage anchors. Shows, Merch and Newsletter URLs redirect to Contact; Members goes directly to the homepage lineup. `_redirects` preserves those old links on Cloudflare. A noindex Members fallback exists for static previews.
 
-The top-level `404.html` prevents Cloudflare Pages from treating missing URLs as homepage routes. Missing pages return HTTP 404 and are excluded from indexing and the sitemap.
+The top-level `404.html` prevents nonexistent URLs from serving the homepage with an incorrect 200 status.
 
 ## Images and legacy URLs
 

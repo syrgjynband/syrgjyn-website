@@ -2,9 +2,7 @@ const { escapeHtml: e } = require("./_cards.cjs");
 
 function navigation() {
   const links = [
-    ["Home", "/"], ["Music", "/discography/"], ["Shows", "/shows/"],
-    ["Blog", "/blog.html"], ["Gallery", "/gallery/"], ["About", "/about/"], ["Press / EPK", "/press/"],
-    ["Merch", "/#merch"], ["Newsletter", "/newsletter/"], ["Contact", "/#contact"]
+    ["Home", "/"], ["Blog", "/blog"], ["Gallery", "/gallery/"], ["Contact", "/contact/"]
   ];
   return `<div class="navlinks">${links.map(([label, url]) => `<a href="${url}">${label}</a>`).join("\n")}</div>`;
 }

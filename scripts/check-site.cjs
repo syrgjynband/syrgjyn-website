@@ -31,7 +31,9 @@ for (const file of pages) {
     const canonical = canonicalTag?.match(/href="([^"]+)"/)?.[1];
     assert.equal(canonical, "https://syrgjyn.com" + publicPath(pageUrl(file)), `Canonical must be the served URL in ${file}`);
     assert.equal((html.match(/<h1\b/g) || []).length, 1, `H1 count in ${file}`);
-    assert(html.includes('href="/press/"'), `Missing Press navigation in ${file}`);
+    const nav = html.match(/<div class="navlinks">([\s\S]*?)<\/div>/)?.[1];
+    assert.deepEqual([...nav.matchAll(/<a[^>]*>([^<]+)<\/a>/g)].map(match => match[1]), ["Home", "Blog", "Gallery", "Contact"], `Compact menu in ${file}`);
+    assert(nav.includes('href="/contact/"'), "Contact is a dedicated page");
     assert(html.includes('href="/gallery/"'), `Missing Gallery navigation in ${file}`);
     assert.equal((html.match(/name="description"/g) || []).length, 1, `Description count in ${file}`);
   }
@@ -53,9 +55,9 @@ for (const file of pages) {
   }
 }
 const home = read("index.html");
-const about = read("about/index.html");
+const about = home;
 const press = read("press/index.html");
-const shows = read("shows/index.html");
+const contact = read("contact/index.html");
 const band = require("../_data/band.json");
 for (const member of band.members) {
   for (const html of [home, about, press]) assert(html.includes(member.name), `Missing shared member ${member.name}`);
@@ -66,13 +68,22 @@ assert(!home.includes("Join via Email"));
 const postFiles = fs.readdirSync(path.join(__dirname, "..", "content", "posts")).filter(file => file.endsWith(".md"));
 for (const html of [home, read("blog.html")]) {
   assert.equal((html.match(/class="post-card"/g) || []).length, postFiles.length, "CMS card count must match articles");
-  const links = [...html.matchAll(/class="post-link" href="(\/posts\/[^" ]+)"/g)].map(match => match[1]);
+  const links = [...html.matchAll(/<article class="post-card">([\s\S]*?)<\/article>/g)].map(match => match[1].match(/class="post-link" href="([^" ]+)"/)[1]);
   assert.equal(new Set(links).size, links.length, "Duplicate article links");
 }
-assert(shows.includes("Check-In Fest") && shows.includes("2023-10-03"));
+assert(contact.includes("Tech rider") && contact.includes("/Syrgjyn_Official_EPK.pdf"));
+assert(home.includes('id="music"') && home.includes("Manifest of Essence"));
+assert.equal([...home.matchAll(/<section[^>]*id="([^"]+)"/g)].at(-1)[1], "about");
+assert(home.includes('id="lineup"'));
+assert(!/<section[^>]*id="(?:shows|merch|contact)"/.test(home));
+assert(!home.includes("Join the mailing list"));
+for (const retired of ["about", "discography", "shows", "merch", "newsletter"]) {
+  assert(!fs.existsSync(path.join(root, retired, "index.html")), `Retired page ${retired}`);
+}
+assert(fs.existsSync(path.join(root, "newsletter/privacy/index.html")), "Keep existing subscriber privacy access");
 assert(fs.statSync(path.join(root, "images/syrgjyn-hero.webp")).size < 500000, "Hero size budget");
 assert(!fs.existsSync(path.join(root, "images/hero-bg.jpg")));
-assert.equal(redirects.get("/members/"), "/about/#lineup");
+assert.equal(redirects.get("/members/"), "/#lineup");
 assert(read("404.html").includes('<meta name="robots" content="noindex">'));
 const sitemap = [...read("sitemap.xml").matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
 const expected = pages.filter(file => !fs.readFileSync(file, "utf8").includes('name="robots" content="noindex"')).map(file => "https://syrgjyn.com" + publicPath(pageUrl(file)));

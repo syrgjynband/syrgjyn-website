@@ -1,60 +1,62 @@
 
 const fs = require("node:fs");
 const { escapeHtml } = require("./_cards.cjs");
-const { navigation, lineup, splitShows, showList, section: renderSection } = require("./_site.cjs");
+const { navigation, lineup, section: renderSection } = require("./_site.cjs");
 
 const pages = [
   {
-    slug: "about",
-    title: "About Syrgjyn | Albanian Underground Metal Since 1999",
-    description: "The history of Syrgjyn, an underground metal band founded in Tirana in 1999, including the Alkimia performances and Albanian metal scene.",
-    heading: "About Syrgjyn",
-    parts: [
-      ["Founded in Tirana", "Syrgjyn was founded in Tirana, Albania, in 1999. The band’s story is tied to the local underground rock and metal scene."],
-      ["The Alkimia years, 2005–2011", "From September 2005 to August 2011, Syrgjyn performed every Saturday night at Alkimia in Tirana. During that period the band played as two musicians with a drum machine, often performing sets lasting three to four hours."],
-      ["The underground legacy", "Those evenings covered rock, punk, heavy metal, thrash, gothic metal, death metal and black metal. The band describes these performances as a formative part of its identity and its connection with Tirana’s music community."]
+    "slug": "contact",
+    "title": "Contact & Booking | Syrgjyn",
+    "description": "Contact Syrgjyn for concert bookings, interviews, press materials and band inquiries.",
+    "heading": "Contact",
+    "parts": [
+      [
+        "Booking & band inquiries",
+        "For festivals, venues and other band inquiries, email info@syrgjyn.com."
+      ],
+      [
+        "Interviews & press",
+        "For interviews, review copies, photographs and press materials, contact info@syrgjyn.com."
+      ]
     ],
-    links: [
-      ["Read the Alkimia story", "/posts/we-kept-the-fire-burning.html"],
-      ["Hear our music", "/discography/"]
+    "links": [
+      [
+        "Email Syrgjyn",
+        "mailto:info@syrgjyn.com"
+      ],
+      [
+        "Download official EPK (PDF)",
+        "/Syrgjyn_Official_EPK.pdf"
+      ],
+      [
+        "Press resources",
+        "/press/"
+      ]
     ]
   },
   {
-    slug: "discography",
-    title: "Syrgjyn Discography | Manifest of Essence & Metal Music",
-    description: "Discover Manifest of Essence by Syrgjyn, listen to the Albanian metal band on Spotify and Bandcamp, and explore upcoming music.",
-    heading: "Music & Discography",
-    parts: [
-      ["Manifest of Essence (2010)", "Syrgjyn’s album Manifest of Essence was released in 2010. Stream the band’s recordings or explore the album through the official music platforms."],
-      ["Sedentary Death Syndrome", "Sedentary Death Syndrome is the band’s second album project, currently in development. No release date is announced here."]
-    ],
-    links: [
-      ["Listen on Spotify", "https://open.spotify.com/artist/6Q56AfBOeaNPbrToA4vGDi"],
-      ["Manifest of Essence on Bandcamp", "https://syrgjyn.bandcamp.com/album/manifest-of-essence-20th-anniversary-remaster"]
-    ]
-  },
-  {
-    slug: "shows",
-    title: "Syrgjyn Live Shows | Metal Concerts & Bookings",
-    description: "Find updates about Syrgjyn live performances in Albania and contact the band for festivals, concerts and booking inquiries.",
-    heading: "Live Shows",
-    parts: [],
-    links: [
-      ["Send a booking inquiry", "mailto:info@syrgjyn.com?subject=Syrgjyn%20Booking%20Inquiry"],
-      ["Read the live-history story", "/posts/we-kept-the-fire-burning.html"]
-    ]
-  },
-  {
-    slug: "press",
-    title: "Syrgjyn Press & Media | Albanian Underground Metal",
-    description: "Press information for Syrgjyn, the Albanian metal band founded in Tirana in 1999. Find background, music links and media contact details.",
-    heading: "Press & Media",
-    parts: [],
-    links: [
-      ["DOWNLOAD OFFICIAL EPK (PDF)", "/Syrgjyn_Official_EPK.pdf"],
-      ["Email Syrgjyn", "mailto:info@syrgjyn.com?subject=Press%20Inquiry"],
-      ["Discography", "/discography/"],
-      ["The Chronicles", "/blog.html"]
+    "slug": "press",
+    "title": "Syrgjyn Press & Media | Albanian Underground Metal",
+    "description": "Press information for Syrgjyn, the Albanian metal band founded in Tirana in 1999. Find background, music links and media contact details.",
+    "heading": "Press & Media",
+    "parts": [],
+    "links": [
+      [
+        "DOWNLOAD OFFICIAL EPK (PDF)",
+        "/Syrgjyn_Official_EPK.pdf"
+      ],
+      [
+        "Email Syrgjyn",
+        "mailto:info@syrgjyn.com?subject=Press%20Inquiry"
+      ],
+      [
+        "Discography",
+        "/#music"
+      ],
+      [
+        "The Chronicles",
+        "/blog.html"
+      ]
     ]
   }
 ];
@@ -74,7 +76,7 @@ module.exports = class SectionPages {
     };
   }
 
-  render({ section, band, shows }) {
+  render({ section, band, newsletter }) {
     const home = fs.readFileSync("index.html", "utf8");
     const css = home.match(/<style>([\s\S]*?)<\/style>/i)[1];
     const e = escapeHtml;
@@ -97,16 +99,9 @@ module.exports = class SectionPages {
       `<section><div class="wrap"><h2>${e(head)}</h2><p class="lead" style="max-width:760px;line-height:1.85;font-size:18px">${e(body)}</p></div></section>`
     ).join("");
 
-    if (section.slug === "about") {
-      sections += renderSection("2010: Manifest of Essence", '<p class="lead">Syrgjyn released Manifest of Essence in 2010, during the Alkimia years.</p>');
-      sections += renderSection("Now: original music", '<p class="lead">The second album project, Sedentary Death Syndrome, is in development. No release date has been announced.</p>');
-      sections += renderSection("Current lineup", lineup(band), "lineup");
-    }
-    if (section.slug === "shows") {
-      const { upcoming, past } = splitShows(shows);
-      sections = renderSection("Upcoming dates", showList(upcoming)) +
-        renderSection("Past shows", showList(past, "Past show announcements will appear here.") + `<p class="lead" style="margin-top:24px">${e(shows.history || "")}</p>`) +
-        renderSection("Book Syrgjyn", '<p class="lead">For festival appearances, venue bookings and concert inquiries, contact info@syrgjyn.com.</p>');
+    if (section.slug === "contact") {
+      sections += renderSection("Tech rider (quick)", '<div class="list"><div>2x guitars, 1x bass, 4-piece drum kit</div><div>3 vocal mics (SM58 or similar)</div><div>3 guitar/bass DIs as fallback</div><div>4 monitor mixes minimum</div></div>');
+      sections += renderSection("Existing email subscriptions", `<p class="lead">To stop receiving band emails, <a href="${e(newsletter.unsubscribeUrl)}">unsubscribe here</a>. See our <a href="/newsletter/privacy/">newsletter privacy information</a> or contact the band for help.</p>`);
     }
     if (section.slug === "press") {
       sections = renderSection("Short biography", `<p class="lead press-bio">${e(band.shortBio)}</p>`) +
